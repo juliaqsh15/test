@@ -20,32 +20,6 @@ import CollectionKit
  
  See `@objc func handlePan(gr: UIPanGestureRecognizer)` down below for detail.
  
- 2. The `.useNoSnapshot` modifier
- 
- Whenever this modifier is used on a view, Hero won't create snapshot for that view during
- the transition. Instead, hero will grab the view from its superview, insert it into the
- transition container view, and use it directly during the transition.
- 
- A few things to point out when using `.useNoSnapshot`:
- 
- 1. It improves the performance a lot! since snapshot takes a long time to create.
- 
- 2. It doesn't work with auto layout.
- 
- This is because Hero will remove the view from its original view hierarchy.
- Therefore, breaking all the constraints.
- 
- 3. Becareful of when to layout the cell. Do not set the `frame` of the cell when Hero is
- using it for transition. Otherwise it will create weird effect during the transition.
- 
- If you are using `layoutSubviews` to layout a child view with `.useNoSnapshot`, first check
- whether or not the child view is still your child by verifying `childView.superview == self`
- before actually setting the frame of the child view. This way, you won't accidentally
- modify the child view's frame during the transition. The child view's superview
- will not be the original superview during a transiton, but when it finishes, Hero
- will insert the view back to its original view hierarchy.
- 
- 3. Setting `hero.modalAnimationType` to `.none`
  
  without this, a fade animation will be applied to the destination root view.
  Since we use a visual effect view as our background and applied `.fade` hero modifier manually,
